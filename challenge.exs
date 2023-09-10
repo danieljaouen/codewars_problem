@@ -28,7 +28,35 @@ defmodule Challenge do
 
     result
   end
+
+  def solution_without_ets(lst) do
+    lst =
+      if is_binary(lst) do
+        String.split(lst, "", trim: true)
+      else
+        lst
+      end
+
+    Enum.with_index(lst, fn item, index ->
+      if index == 0 do
+        item
+      else
+        prev = Enum.at(lst, index - 1)
+
+        if prev != item do
+          item
+        end
+      end
+    end)
+    |> Enum.filter(&(&1 != nil))
+  end
 end
 
 IO.inspect(Challenge.solution(["A", "A", "A", "B", "B", "C", "A", "A", "D", "E", "E", "E", "E"]))
 IO.inspect(Challenge.solution("AAABBCAADEEEE"))
+
+IO.inspect(
+  Challenge.solution_without_ets(["A", "A", "A", "B", "B", "C", "A", "A", "D", "E", "E", "E", "E"])
+)
+
+IO.inspect(Challenge.solution_without_ets("AAABBCAADEEEE"))
