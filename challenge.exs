@@ -22,7 +22,7 @@ defmodule Challenge do
     end)
 
     result = :ets.lookup(table, "result") |> Enum.at(0) |> elem(1) |> Enum.reverse()
-    result = "#{result}" |> String.split("") |> Enum.filter(fn item -> item != "" end)
+    result = "#{result}" |> String.split("", trim: true)
 
     :ets.delete(table)
 
