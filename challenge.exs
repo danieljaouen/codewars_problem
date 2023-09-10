@@ -12,8 +12,8 @@ defmodule Challenge do
     :ets.insert(table, {"result", []})
 
     Enum.each(lst, fn item ->
-      prev = :ets.lookup(table, "prev") |> Enum.at(0) |> elem(1)
-      result = :ets.lookup(table, "result") |> Enum.at(0) |> elem(1)
+      prev = fetch(table, "prev")
+      result = fetch(table, "result")
 
       if prev != item do
         :ets.insert(table, {"prev", item})
@@ -21,12 +21,16 @@ defmodule Challenge do
       end
     end)
 
-    result = :ets.lookup(table, "result") |> Enum.at(0) |> elem(1) |> Enum.reverse()
+    result = fetch(table, "result") |> Enum.reverse()
     result = "#{result}" |> String.split("", trim: true)
 
     :ets.delete(table)
 
     result
+  end
+
+  defp fetch(table, key) do
+    :ets.lookup(table, key) |> Enum.at(0) |> elem(1)
   end
 
   def solution_without_ets(lst) do
