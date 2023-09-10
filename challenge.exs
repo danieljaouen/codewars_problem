@@ -17,11 +17,11 @@ defmodule Challenge do
 
       if prev != item do
         :ets.insert(table, {"prev", item})
-        :ets.insert(table, {"result", result ++ [item]})
+        :ets.insert(table, {"result", [item | result]})
       end
     end)
 
-    result = :ets.lookup(table, "result") |> Enum.at(0) |> elem(1)
+    result = :ets.lookup(table, "result") |> Enum.at(0) |> elem(1) |> Enum.reverse()
     result = "#{result}" |> String.split("") |> Enum.filter(fn item -> item != "" end)
 
     :ets.delete(table)
