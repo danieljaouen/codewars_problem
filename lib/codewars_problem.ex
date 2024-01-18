@@ -28,6 +28,8 @@ defmodule CodewarsProblem do
       prev = fetch(table, "prev")
       result = fetch(table, "result")
 
+      dbg([item, prev, result])
+
       if prev != item do
         :ets.insert(table, {"prev", item})
         :ets.insert(table, {"result", [item | result]})
@@ -61,7 +63,7 @@ defmodule CodewarsProblem do
         prev = Enum.at(lst, index - 1)
 
         if prev != item do
-          item
+          dbg(item)
         end
       end
     end)
